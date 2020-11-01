@@ -1,5 +1,7 @@
 from keras.layers import Layer
 from keras import backend as K
+import pandas as pd
+import numpy as np
 import os
 
 class RBFLayer(Layer):
@@ -25,22 +27,27 @@ class RBFLayer(Layer):
 
     def compute_output_shape(self, input_shape):
         return (input_shape[0], self.units)
+if __name__ == "__main__":
 
-import pandas as pd
-import numpy as np
-print(os.path.join(os.path.dirname(__file__)))
-X = np.load(os.path.join(os.path.dirname(__file__),'test_train/k49-train-imgs.npz'))['arr_0']
-y = np.load(os.path.join(os.path.dirname(__file__),'test_train/k49-train-labels.npz'))['arr_0']
-y = (y <= 25).astype(int)
-from keras.layers import Dense, Flatten
-from keras.models import Sequential
-from keras.losses import binary_crossentropy
 
-model = Sequential()
-model.add(Flatten(input_shape=(28, 28)))
-model.add(RBFLayer(10, 0.5))
-model.add(Dense(1, activation='sigmoid', name='foo'))
-
-model.compile(optimizer='rmsprop', loss=binary_crossentropy)
-
-model.fit(X, y, batch_size=256, epochs=3)
+    # X = np.load(os.path.join(os.path.dirname(__file__),'test_train/k49-train-imgs.npz'))['arr_0']
+    # y = np.load(os.path.join(os.path.dirname(__file__),'test_train/k49-train-labels.npz'))['arr_0']
+    # print(y)
+    X=np.load(os.path.join(os.path.dirname(__file__),'mnist_dataset/trainx.npy'))
+    y= np.load(os.path.join(os.path.dirname(__file__), 'mnist_dataset/trainy.npy'))
+    print(X.shape)
+    print(y.shape)
+    print(y)
+    # y = (y <= 25).astype(int)
+    # from keras.layers import Dense, Flatten
+    # from keras.models import Sequential
+    # from keras.losses import binary_crossentropy
+    # #
+    # model = Sequential()
+    # model.add(Flatten(input_shape=(28, 28,1)))
+    # model.add(RBFLayer(10, 0.5))
+    # model.add(Dense(1, activation='sigmoid', name='foo'))
+    # #
+    # model.compile(optimizer='rmsprop', loss=binary_crossentropy)
+    # #
+    # model.fit(X, y, batch_size=256, epochs=10)
